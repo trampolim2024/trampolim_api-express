@@ -1,35 +1,19 @@
 import { Router } from 'express';
+import { 
+  createUser, 
+  getAllUsers, 
+  getUserById, 
+  updateUser, 
+  deleteUser 
+} from '../controllers/user.controller.js';
 
 const userRouter = Router();
 
-userRouter.get('/', (req, res) => {
-    res.send({
-        title: 'GET all users',
-    });
-});
-
-userRouter.get('/:id', (req, res) => {
-    res.send({
-        title: 'GET user by ID',
-    });
-});
-
-userRouter.post('/', (req, res) => {
-    res.send({
-        title: 'POST user',
-    });
-});
-
-userRouter.put('/:id', (req, res) => {
-    res.send({
-        title: 'UPDATE user by ID',
-    });
-});
-
-userRouter.delete('/:id', (req, res) => {
-    res.send({
-        title: 'DELETE user by ID',
-    });
-});
+// Definindo as rotas para o CRUD de usuários
+userRouter.get('/', getAllUsers);
+userRouter.post('/', createUser);
+userRouter.get('/:id', getUserById);
+userRouter.put('/:id', updateUser);
+userRouter.delete('/:id', deleteUser);
 
 export default userRouter;
