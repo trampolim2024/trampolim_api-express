@@ -1,24 +1,15 @@
-import { Router } from 'express';
+import express from 'express';
+import { signUp, signIn, signOut } from '../controllers/auth.controller.js';
 
-const authRouter = Router();
+const router = express.Router();
 
-authRouter.post('/sign-up', (req, res) => {
-    res.send({
-        title: 'Sign-up route',
-    });
-});
+// Rota para criar um novo usuário (registro)
+router.post('/sign-up', signUp);
 
-authRouter.post('/sign-in', (req, res) => {
-    res.send({
-        title: 'Sign-in route',
-    });
-});
+// Rota para login de um usuário
+router.post('/sign-in', signIn);
 
-authRouter.post('/sign-out', (req, res) => {
-    res.send({
-        title: 'Sign-out route',
-    });
-});
+// Rota para logout de um usuário (caso deseje implementar o logout)
+router.post('/sign-out', signOut);
 
-
-export default authRouter;
+export default router;
