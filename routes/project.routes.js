@@ -1,47 +1,18 @@
-import {Router} from 'express';
+import { Router } from 'express';
+import { 
+  createProject, 
+  getAllProjects, 
+  getProjectById, 
+  updateProject, 
+  deleteProject 
+} from '../controllers/project.controller.js';
 
-const projectRouter = Router();
+const projectRoutes = Router();
 
-projectRouter.get('/', (req, res) => {
-    res.send({
-        title: 'GET all projects',
-    });
-});
+projectRoutes.get('/', getAllProjects);
+projectRoutes.post('/', createProject);
+projectRoutes.get('/:id', getProjectById);
+projectRoutes.put('/:id', updateProject);
+projectRoutes.delete('/:id', deleteProject);
 
-projectRouter.get('/:id', (req, res) => {
-    res.send({
-        title: 'GET project by ID',
-    });
-});
-
-projectRouter.post('/', (req, res) => {
-    res.send({
-        title: 'POST project',
-    });
-});
-
-projectRouter.put('/:id', (req, res) => {
-    res.send({
-        title: 'UPDATE project by ID',
-    });
-});
-
-projectRouter.delete('/:id', (req, res) => {
-    res.send({
-        title: 'DELETE project by ID',
-    });
-});
-
-projectRouter.get('/user/:id', (req, res) => {
-    res.send({
-        title: 'GET projects by user ID',
-    });
-});
-
-projectRouter.put('/user/:id', (req, res) => {
-    res.send({
-        title: 'UPDATE projects by user ID',
-    });
-});
-
-export default projectRouter;
+export default projectRoutes;
