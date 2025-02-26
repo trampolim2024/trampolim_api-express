@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import { PORT } from './config/env.js';
 import userRouter from './routes/user.routes.js';
 import authRouter from './routes/auth.routes.js';
@@ -8,6 +9,19 @@ import connectToDataBase from './database/mongodb.js';
 import initializeAdmin from './utils/initializeAdmin.js';
 
 const app = express();
+
+// Criar pasta 'uploads' se não existir
+const uploadDir = 'uploads';
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+// Middleware para parsing de JSON e formulários
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Servir arquivos estáticos da pasta 'uploads'
+app.use('/uploads', express.static('uploads'));
 
 // Definição das rotas
 app.use('/api/v1/auth', authRouter);
