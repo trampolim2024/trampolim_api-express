@@ -7,6 +7,8 @@ import {
   updateAnnouncement, 
   deleteAnnouncement 
 } from '../controllers/announcement.controller.js';
+import { checkIfAnnouncementExists } from '../middlewares/announcement.middleware.js';
+
 
 const announcementRouter = Router();
 
@@ -30,9 +32,10 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
+// Rotas
 announcementRouter.get('/', getAllAnnouncements);
 announcementRouter.get('/:id', getAnnouncementById);
-announcementRouter.post('/', upload.single('arquivoEdital'), createAnnouncement);
+announcementRouter.post('/', checkIfAnnouncementExists, upload.single('arquivoEdital'), createAnnouncement); 
 announcementRouter.put('/:id', updateAnnouncement);
 announcementRouter.delete('/:id', deleteAnnouncement);
 
