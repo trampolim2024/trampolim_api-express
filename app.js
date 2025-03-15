@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'; // Importar o pacote cors
 import fs from 'fs';
 import { PORT } from './config/env.js';
 import userRouter from './routes/user.routes.js';
@@ -19,6 +20,9 @@ if (!fs.existsSync(uploadDir)) {
 // Middleware para parsing de JSON e formulários
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware CORS
+app.use(cors()); // Adicionar o middleware cors
 
 // Servir arquivos estáticos da pasta 'uploads'
 app.use('/uploads', express.static('uploads'));
