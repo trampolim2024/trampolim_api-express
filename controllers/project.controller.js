@@ -30,6 +30,19 @@ export const getProjectById = async (req, res, next) => {
   }
 };
 
+export const getProjectsByUserId = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const projects = await Project.find({ userId: userId }); // Certifique-se de que o campo userId existe no modelo Project
+    if (!projects || projects.length === 0) {
+      return res.status(404).json({ success: false, message: 'Nenhum projeto encontrado para este usuário' });
+    }
+    res.status(200).json({ success: true, data: projects });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const updateProject = async (req, res, next) => {
   try {
     const project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });

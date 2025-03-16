@@ -61,6 +61,11 @@ const projectSchema = new mongoose.Schema({
             message: props => `${props.value} não é um link válido!`
         }
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 }, {
     timestamps: true // Adiciona createdAt e updatedAt automaticamente
 });
