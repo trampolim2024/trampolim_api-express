@@ -2,20 +2,19 @@ import Project from '../models/project.model.js';
 
 export const createProject = async (req, res, next) => {
   try {
-    // Extrai o userId do token (supondo que você está usando autenticação JWT)
-    const userId = req.user._id; // req.user._id deve conter o ID do usuário autenticado
+    // Extrai o userId do corpo da requisição
+    const { userId, ...projectData } = req.body;
 
-    // Adiciona o userId ao corpo da requisição
-    const projectData = {
-      ...req.body, // Copia todos os campos do corpo da requisição
-      userId, // Adiciona o userId
-    };
+    if (!userId) {
+      return res.status(400).json({ success: false, message: 'ID do usuário não fornecido' });
+    }
 
-    // Cria o projeto com os dados atualizados
-    const project = await Project.create(projectData);
+    // Cria o projeto com os dados recebidos, incluindo o userId
+    const project = await Project.create({ ...projectData, userId });
 
     res.status(201).json({ success: true, data: project });
   } catch (e) {
+    console.error('Erro ao criar projeto:', e); // Log do erro
     next(e);
   }
 };
