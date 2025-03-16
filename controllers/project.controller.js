@@ -2,7 +2,18 @@ import Project from '../models/project.model.js';
 
 export const createProject = async (req, res, next) => {
   try {
-    const project = await Project.create(req.body);
+    // Extrai o userId do token (supondo que você está usando autenticação JWT)
+    const userId = req.user._id; // req.user._id deve conter o ID do usuário autenticado
+
+    // Adiciona o userId ao corpo da requisição
+    const projectData = {
+      ...req.body, // Copia todos os campos do corpo da requisição
+      userId, // Adiciona o userId
+    };
+
+    // Cria o projeto com os dados atualizados
+    const project = await Project.create(projectData);
+
     res.status(201).json({ success: true, data: project });
   } catch (e) {
     next(e);
