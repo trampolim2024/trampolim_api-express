@@ -11,7 +11,7 @@ const userRouter = Router();
 
 // Definindo as rotas para o CRUD de usuários
 userRouter.get('/', getAllUsers);
-userRouter.get('/:id', authorize, getUserById);
+userRouter.get('/:id', getUserById);
 userRouter.put('/:id', updateUser);
 userRouter.delete('/:id', deleteUser);
 
